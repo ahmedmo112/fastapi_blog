@@ -1,0 +1,4 @@
+__pycache__
+blog/__pycache__
+fastapi-env
+.DS_Store
