@@ -1,8 +1,10 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-from .. import schemas , models 
+from blog import schemas , models 
+# from blog.routers.authentiction import USER_ID
 
 def get_all(db: Session):
+    
     blogs = db.query(models.Blog).all()
     return blogs
 
@@ -12,16 +14,17 @@ def create(db: Session,request: schemas.Blog):
     new_blog = models.Blog(
         title = request.title,
         body = request.body,
-        user_id = 1
+        user_id = 1   #try to get user id 
     )
     db.add(new_blog)
     db.commit()
-    db.refresh(new_blog)
+    db.refresh(new_blog) 
     return new_blog
 
 
 
 def show(db: Session,id:int):
+    
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
     if not blog:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f"Blog with the id {id} is not avaialable")

@@ -1,4 +1,5 @@
-from typing import List
+from optparse import Option
+from typing import List, Optional
 from pydantic import BaseModel
 
 class BlogBase(BaseModel):
@@ -33,8 +34,24 @@ class ShowUserwithoutBlogs(BaseModel):
     class Config():
         orm_mode = True
 class ShowBlog(BaseModel): # we use it in response_model to view the data as what we want
+    id:str
     title:str
     body:str
     creator: ShowUserwithoutBlogs
     class Config():
         orm_mode = True
+
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    email: Optional[str] = None
+
+
+class Login(BaseModel):
+    username:str
+    password:str
